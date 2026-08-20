@@ -45,7 +45,59 @@ class ModelTrainer:
                 "AdaBoost Regressor": AdaBoostRegressor()
             }
             
-            model_report: dict= evaluate_model(x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test, models=models)
+            
+            
+            params = {
+                "Decision Tree": {
+                    "criterion": [
+                        "squared_error",
+                        "absolute_error",
+                        "poisson"
+                        ]
+                    },
+
+                "Random Forest": {
+                    "n_estimators": [50, 100, 200]
+                    },
+
+                "Gradient Boosting": {
+                    "learning_rate": [0.01, 0.05, 0.1],
+                    "n_estimators": [50, 100, 200],
+                    "subsample": [0.8, 1.0]
+                    },
+
+                "Linear Regression": {},
+
+                "K-Neighbors Regressor": {
+                    "n_neighbors": [3, 5, 7, 9],
+                    "weights": ["uniform", "distance"]
+                    },
+
+                "XGB Regressor": {
+                    "learning_rate": [0.01, 0.05, 0.1],
+                    "n_estimators": [100, 200, 300]
+                    },
+
+                "CatBoosting Regressor": {
+                    "depth": [6, 8, 10],
+                    "learning_rate": [0.01, 0.05, 0.1],
+                    "iterations": [100, 200]
+                    },
+
+                "AdaBoost Regressor": {
+                    "learning_rate": [0.01, 0.05, 0.1],
+                    "n_estimators": [50, 100, 200]
+                    }
+                }
+
+            model_report:dict=evaluate_model(
+                x_train=x_train,
+                y_train=y_train,
+                x_test=x_test,
+                y_test=y_test,
+                models=models,
+                param=params)
+            
             
             # To get the best model score from the dictionary
             best_model_score= max(sorted(model_report.values()))
